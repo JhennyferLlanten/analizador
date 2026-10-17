@@ -17,6 +17,19 @@ public class ExtractorArticulos {
         return inicio;
     }
 
+    public static int encontrarFinAbstract(String texto, int inicioAbstract) {
+        String[] marcasFin = {"Keywords", "1. Introduction"};
+        int posicionFin = -1;
+
+        for (int i = 0; i < marcasFin.length; i++) {
+            int posicionMarca = BuscadorTexto.buscarPatron(texto, marcasFin[i], inicioAbstract);
+            if (posicionMarca != -1 && (posicionFin == -1 || posicionMarca < posicionFin)) {    //marca existe y (no hay posicion guardada o la nueva marca esta primero)
+                posicionFin = posicionMarca;           //Guarda la posición donde termina el texto del abstract
+            }
+        }
+        return posicionFin;
+    }
+
     public static boolean esSeparador(char c) {
         return c == ' ' || c == ':' || c == '\n' || c == '\r' || c == '\t';
     }

@@ -24,6 +24,25 @@ public class Main {
         mostrarInicio("mdpi", mdpi);
         mostrarInicio("emerald", emerald);
         mostrarInicio("sinMarca", sinMarca);
+
+        String elsevierCompleto = "ARTICLE INFO\nKeywords: AI\nABSTRACT  \nSince artificial intelligence is everywhere.\n1. Introduction\nAI is used";
+        String mdpiCompleto = "Received: 28 March 2024 Abstract: The use of generative AI in academia. Keywords: AI; education 1. Introduction Generative";
+        String wileyCompleto = "Abstract Recent literature underscores the need. KEYWORDS AI competence 1. Introduction";
+        String sinFin = "Abstract: texto que no tiene ninguna marca de final";
+
+        mostrarAbstract("elsevierCompleto", elsevierCompleto);
+        mostrarAbstract("mdpiCompleto", mdpiCompleto);
+        mostrarAbstract("wileyCompleto", wileyCompleto);
+        mostrarAbstract("sinFin", sinFin);
+    }
+
+    public static void mostrarAbstract(String nombre, String texto) {
+        int inicio = ExtractorArticulos.encontrarInicioAbstract(texto);
+        int fin = ExtractorArticulos.encontrarFinAbstract(texto, inicio);
+        System.out.println(nombre + " -> inicio = " + inicio + ", fin = " + fin);
+        if (fin != -1) {
+            System.out.println("   abstract: [" + texto.substring(inicio, fin) + "]");
+        }
     }
 
     public static void mostrarInicio(String nombre, String texto) {
