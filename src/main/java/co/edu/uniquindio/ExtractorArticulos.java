@@ -84,6 +84,16 @@ public class ExtractorArticulos {
         return limpio.toString();
     }
 
+    public static String corregirTitulo(int numero, String tituloMetadatos) {
+        if (numero == 11) {         //los metadatos dicen "transform" y el articulo dice "transforms"
+            return "A scoping review on how generative artificial intelligence transforms assessment in higher education";
+        }
+        if (numero == 13) {         //los metadatos traen un codigo de la revista en lugar del titulo
+            return "Artificial intelligence for education and its emphasis on assessment and adversity quotient: a review";
+        }
+        return tituloMetadatos;
+    }
+
     public static boolean esSaltoDeLinea(char c) {
         return c == '\n' || c == '\r';
     }

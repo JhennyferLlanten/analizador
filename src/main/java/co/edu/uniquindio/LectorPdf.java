@@ -18,4 +18,14 @@ public class LectorPdf {
         documento.close();
         return texto;
     }
+
+    public static String leerTitulo(String ruta) throws IOException {
+        PDDocument documento = Loader.loadPDF(new File(ruta));
+        String titulo = documento.getDocumentInformation().getTitle();   //entrega los datos internos del PDF (metadatos) y pide el titulo
+        documento.close();
+        if (titulo == null) {
+            return "";
+        }
+        return titulo.trim();
+    }
 }

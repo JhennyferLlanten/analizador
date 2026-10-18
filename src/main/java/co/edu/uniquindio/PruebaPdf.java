@@ -8,6 +8,7 @@ public class PruebaPdf {
 
         String texto = LectorPdf.leerPrimeraPagina(ruta);
 
+        System.out.println("Titulo (metadatos): " + LectorPdf.leerTitulo(ruta));
         System.out.println("Letras leidas: " + texto.length());
         System.out.println("----- texto de la primera pagina -----");
         System.out.println(texto);
