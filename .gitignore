@@ -33,3 +33,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
+### Articulos del corpus (PDF con derechos de autor, no se suben) ###
+articulosProyecto/

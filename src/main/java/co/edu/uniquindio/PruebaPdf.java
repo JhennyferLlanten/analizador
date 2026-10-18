@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class PruebaPdf {
     public static void main(String[] args) throws IOException {
-        String ruta = "../Articulos Proyecto Algoritmos/9. AI technologies for education Recent research  future directions.pdf";
+        String ruta = "articulosProyecto/7. Human-centred learning analytics and AI in education  A systematic review.pdf";
 
         String texto = LectorPdf.leerPrimeraPagina(ruta);
 

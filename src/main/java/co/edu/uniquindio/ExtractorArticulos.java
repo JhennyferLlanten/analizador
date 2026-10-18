@@ -3,15 +3,15 @@ package co.edu.uniquindio;
 public class ExtractorArticulos {
 
     public static int encontrarInicioAbstract(String texto) {
-        String[] marcasInicio = {"Abstract", "A B S T R A C T"};
+        String[] marcas = {"\nEthical considerations", "Abstract", "A B S T R A C T"};      //La primera solo existe en el articulo 7 (antes del abstract)
         int posicionMarca = -1;
         int tamanoMarca = 0;
 
-        for (int i = 0; i < marcasInicio.length; i++) {
-            int posicion = BuscadorTexto.buscarPatron(texto, marcasInicio[i], 0);
-            if (posicion != -1 && (posicionMarca == -1 || posicion < posicionMarca)) {      //la marca existe y (no hay una guardada o esta esta primero)
+        for (int i = 0; i < marcas.length && posicionMarca == -1; i++) {         //se detiene en cuanto encuentra una marca
+            int posicion = BuscadorTexto.buscarPatron(texto, marcas[i], 0);
+            if (posicion != -1) {
                 posicionMarca = posicion;
-                tamanoMarca = marcasInicio[i].length();         //guarda el largo de la marca que se encontro
+                tamanoMarca = marcas[i].length();         //guarda el largo de la marca que se encontro
             }
         }
 
@@ -27,7 +27,7 @@ public class ExtractorArticulos {
     }
 
     public static int encontrarFinAbstract(String texto, int inicioAbstract) {
-        String[] marcasFin = {"\nKeywords", "\nK E Y W O R D S", "1. Introduction"};      //Keywords debe empezar una linea nueva, asi no se confunde con la palabra dentro del texto
+        String[] marcasFin = {"\nKeywords", "\nK E Y W O R D S", "1. Introduction", "\nSince Alan Turing"};      //Keywords debe empezar una linea nueva. La ultima solo existe en el articulo 9 (primera frase del texto que sigue al abstract)
         int posicionFin = -1;
 
         for (int i = 0; i < marcasFin.length; i++) {
@@ -90,11 +90,11 @@ public class ExtractorArticulos {
 
     public static boolean esEspacioBlanco(char c) {
         return c == ' ' || c == '\t' || esSaltoDeLinea(c)
-                || c == ' ' || c == ' ' || c == ' ' || c == ' ';        //otros espacios que traen algunos PDF
+                || c == ' ' || c == ' ' || c == ' ' || c == ' ';        //otros espacios que traen algunos PDF, \u00A0, \u2002, \u2003, \u200A
     }
 
     public static boolean esInvisible(char c) {
-        return c == '​' || c == '﻿';          //espacio de ancho cero y marca de inicio de archivo
+        return c == '​' || c == '﻿';          //espacio de ancho cero y marca de inicio de archivo, \u200B, \uFEFF
     }
 
     public static boolean esSeparador(char c) {
