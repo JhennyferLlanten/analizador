@@ -34,6 +34,29 @@ public class Main {
         mostrarAbstract("mdpiCompleto", mdpiCompleto);
         mostrarAbstract("wileyCompleto", wileyCompleto);
         mostrarAbstract("sinFin", sinFin);
+
+        String sinEspacio = "Abstract: Texto importante.Keywords: AI";
+        String variosSeparadores = "Abstract Texto con varios.  \n Keywords: AI";
+
+        mostrarExtraccion("elsevierCompleto", elsevierCompleto);
+        mostrarExtraccion("mdpiCompleto", mdpiCompleto);
+        mostrarExtraccion("wileyCompleto", wileyCompleto);
+        mostrarExtraccion("sinEspacio", sinEspacio);
+        mostrarExtraccion("variosSeparadores", variosSeparadores);
+        mostrarExtraccion("sinFin", sinFin);
+        mostrarExtraccion("sinMarca", sinMarca);
+
+        String conSaltos = "Abstract\nSince artificial intelligence (AI) is finding its way into more and\nmore areas of everyday life, improving the AI skills of non-experts is\nimportant. In this practi-\ntioners paper we study  two   things.\r\nThe end.\nKeywords: AI";
+        mostrarExtraccion("conSaltos", conSaltos);
+    }
+
+    public static void mostrarExtraccion(String nombre, String texto) {
+        String resultado = ExtractorArticulos.extraerAbstract(texto);
+        if (resultado.length() == 0) {
+            System.out.println(nombre + " -> no se pudo extraer");
+        } else {
+            System.out.println(nombre + " -> [" + resultado + "]");
+        }
     }
 
     public static void mostrarAbstract(String nombre, String texto) {
