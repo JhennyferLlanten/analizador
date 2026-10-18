@@ -3,14 +3,23 @@ package co.edu.uniquindio;
 public class ExtractorArticulos {
 
     public static int encontrarInicioAbstract(String texto) {
-        String marca = "Abstract";
-        int posicionMarca = BuscadorTexto.buscarPatron(texto, marca, 0);
+        String[] marcasInicio = {"Abstract", "A B S T R A C T"};
+        int posicionMarca = -1;
+        int tamanoMarca = 0;
 
-        if (posicionMarca == -1) {          //la palabra no esta
+        for (int i = 0; i < marcasInicio.length; i++) {
+            int posicion = BuscadorTexto.buscarPatron(texto, marcasInicio[i], 0);
+            if (posicion != -1 && (posicionMarca == -1 || posicion < posicionMarca)) {      //la marca existe y (no hay una guardada o esta esta primero)
+                posicionMarca = posicion;
+                tamanoMarca = marcasInicio[i].length();         //guarda el largo de la marca que se encontro
+            }
+        }
+
+        if (posicionMarca == -1) {          //ninguna marca esta
             return -1;
         }
 
-        int inicio = posicionMarca + marca.length();        //Se ubica al terminar la palabra
+        int inicio = posicionMarca + tamanoMarca;        //Se ubica al terminar la marca
         while (inicio < texto.length() && esSeparador(texto.charAt(inicio))) {
             inicio++;
         }
@@ -18,7 +27,7 @@ public class ExtractorArticulos {
     }
 
     public static int encontrarFinAbstract(String texto, int inicioAbstract) {
-        String[] marcasFin = {"Keywords", "1. Introduction"};
+        String[] marcasFin = {"\nKeywords", "\nK E Y W O R D S", "1. Introduction"};      //Keywords debe empezar una linea nueva, asi no se confunde con la palabra dentro del texto
         int posicionFin = -1;
 
         for (int i = 0; i < marcasFin.length; i++) {
@@ -60,6 +69,8 @@ public class ExtractorArticulos {
                 while (i < tamano && esSaltoDeLinea(abstractCrudo.charAt(i))) {
                     i++;                                    //salta el salto de linea: la palabra queda unida
                 }
+            } else if (esInvisible(c)) {                    //letra que no se ve: se descarta
+                i++;
             } else if (esEspacioBlanco(c)) {                // si la nueva letra es un espacio, tabulador o un salto de línea
                 if (limpio.length() > 0 && limpio.charAt(limpio.length() - 1) != ' ') {     //si hay texto y la ultima letra no es espacio
                     limpio.append(' ');                     //un solo espacio, sin repetir
@@ -78,10 +89,15 @@ public class ExtractorArticulos {
     }
 
     public static boolean esEspacioBlanco(char c) {
-        return c == ' ' || c == '\t' || esSaltoDeLinea(c);
+        return c == ' ' || c == '\t' || esSaltoDeLinea(c)
+                || c == ' ' || c == ' ' || c == ' ' || c == ' ';        //otros espacios que traen algunos PDF
+    }
+
+    public static boolean esInvisible(char c) {
+        return c == '​' || c == '﻿';          //espacio de ancho cero y marca de inicio de archivo
     }
 
     public static boolean esSeparador(char c) {
-        return c == ' ' || c == ':' || c == '\n' || c == '\r' || c == '\t';
+        return c == ':' || esEspacioBlanco(c) || esInvisible(c);
     }
 }

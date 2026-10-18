@@ -26,8 +26,8 @@ public class Main {
         mostrarInicio("sinMarca", sinMarca);
 
         String elsevierCompleto = "ARTICLE INFO\nKeywords: AI\nABSTRACT  \nSince artificial intelligence is everywhere.\n1. Introduction\nAI is used";
-        String mdpiCompleto = "Received: 28 March 2024 Abstract: The use of generative AI in academia. Keywords: AI; education 1. Introduction Generative";
-        String wileyCompleto = "Abstract Recent literature underscores the need. KEYWORDS AI competence 1. Introduction";
+        String mdpiCompleto = "Received: 28 March 2024 Abstract: The use of generative AI in academia.\nKeywords: AI; education 1. Introduction Generative";
+        String wileyCompleto = "Abstract Recent literature underscores the need.\nKEYWORDS AI competence 1. Introduction";
         String sinFin = "Abstract: texto que no tiene ninguna marca de final";
 
         mostrarAbstract("elsevierCompleto", elsevierCompleto);
@@ -35,8 +35,8 @@ public class Main {
         mostrarAbstract("wileyCompleto", wileyCompleto);
         mostrarAbstract("sinFin", sinFin);
 
-        String sinEspacio = "Abstract: Texto importante.Keywords: AI";
-        String variosSeparadores = "Abstract Texto con varios.  \n Keywords: AI";
+        String sinEspacio = "Abstract: Texto importante.\nKeywords: AI";
+        String variosSeparadores = "Abstract Texto con varios. \n\nKeywords: AI";
 
         mostrarExtraccion("elsevierCompleto", elsevierCompleto);
         mostrarExtraccion("mdpiCompleto", mdpiCompleto);
@@ -48,6 +48,11 @@ public class Main {
 
         String conSaltos = "Abstract\nSince artificial intelligence (AI) is finding its way into more and\nmore areas of everyday life, improving the AI skills of non-experts is\nimportant. In this practi-\ntioners paper we study  two   things.\r\nThe end.\nKeywords: AI";
         mostrarExtraccion("conSaltos", conSaltos);
+
+        String palabraKeywords = "Abstract\nWe analyze documents, citations, keywords, and co-authorship.\nKeywords: AI";
+        String espaciosRaros = "Abstract \nHola mundo​ de Java.\nKeywords: AI";
+        mostrarExtraccion("palabraKeywords", palabraKeywords);
+        mostrarExtraccion("espaciosRaros", espaciosRaros);
     }
 
     public static void mostrarExtraccion(String nombre, String texto) {
