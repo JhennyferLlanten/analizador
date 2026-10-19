@@ -84,6 +84,17 @@ public class ExtractorArticulos {
         return limpio.toString();
     }
 
+    public static int obtenerNumero(String nombreArchivo) {
+        int numero = 0;
+        int i = 0;
+
+        while (i < nombreArchivo.length() && nombreArchivo.charAt(i) >= '0' && nombreArchivo.charAt(i) <= '9') {
+            numero = numero * 10 + (nombreArchivo.charAt(i) - '0');         //Convierte la letra del dígito en el número y lo grega a la derecha del numero
+            i++;
+        }
+        return numero;
+    }
+
     public static String corregirTitulo(int numero, String tituloMetadatos) {
         if (numero == 11) {         //los metadatos dicen "transform" y el articulo dice "transforms"
             return "A scoping review on how generative artificial intelligence transforms assessment in higher education";
