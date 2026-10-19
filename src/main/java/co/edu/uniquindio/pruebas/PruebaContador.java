@@ -1,7 +1,7 @@
 package co.edu.uniquindio.pruebas;
 
 import co.edu.uniquindio.modelo.Articulo;
-import co.edu.uniquindio.modelo.ConteoPalabras;
+import co.edu.uniquindio.modelo.TablaFrecuencias;
 import co.edu.uniquindio.modelo.LectorDatos;
 import co.edu.uniquindio.seguimiento.ContadorPalabras;
 
@@ -10,7 +10,7 @@ import java.io.IOException;
 public class PruebaContador {
     public static void main(String[] args) throws IOException {
         Articulo[] articulos = LectorDatos.leerArticulos();
-        ConteoPalabras conteo = ContadorPalabras.contar(articulos);
+        TablaFrecuencias conteo = ContadorPalabras.contar(articulos);
 
         System.out.println("Palabras distintas: " + conteo.cantidad);
         System.out.println("ai: " + conteo.frecuenciaDe("ai"));

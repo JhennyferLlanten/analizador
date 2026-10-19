@@ -1,14 +1,14 @@
 package co.edu.uniquindio.seguimiento;
 
 import co.edu.uniquindio.modelo.Articulo;
-import co.edu.uniquindio.modelo.ConteoPalabras;
+import co.edu.uniquindio.modelo.TablaFrecuencias;
 import co.edu.uniquindio.procesamientoTexto.Preprocesador;
 
 import java.util.ArrayList;
 
 public class ContadorPalabras {
 
-    public static ConteoPalabras contar(Articulo[] articulos) {
+    public static TablaFrecuencias contar(Articulo[] articulos) {
         ArrayList<String> todas = new ArrayList<>();                    //todas las palabras de los 20 abstracts, con repetidas
         for (int i = 0; i < articulos.length; i++) {
             ArrayList<String> palabrasArticulo = Preprocesador.obtenerPalabras(articulos[i].resumen);
@@ -28,18 +28,18 @@ public class ContadorPalabras {
             for (int k = 0; k < cantidad; k++) {
                 if (palabras[k].equals(palabra)) {
                     posicion = k;
-                    break;                                              //ya la encontro, deja de buscar
+                    break;                                              //ya la encontro, devuelve la posición y deja de buscar
                 }
             }
 
             if (posicion == -1) {
-                palabras[cantidad] = palabra;                           //la palabra no esta, la agrega a la lista y la cuenta
+                palabras[cantidad] = palabra;                           //la palabra no esta, la agrega al final de la lista y la cuenta
                 frecuencias[cantidad] = 1;
-                cantidad++;
+                cantidad++;                                             //aumenta en 1 la cantidad de palabras nuevas
             } else {
-                frecuencias[posicion]++;
+                frecuencias[posicion]++;                                //ya existe la palabra, fecuencia en la misma posición aumenta en 1
             }
         }
-        return new ConteoPalabras(palabras, frecuencias, cantidad);     //retorna la lista de palabras, la lista de frecuencia y la cantidad de palabras
+        return new TablaFrecuencias(palabras, frecuencias, cantidad);     //retorna la lista de palabras, la lista de frecuencia y la cantidad de palabras
     }
 }
