@@ -1,4 +1,4 @@
-package co.edu.uniquindio;
+package co.edu.uniquindio.extraccion;
 
 import java.io.File;
 import java.io.IOException;

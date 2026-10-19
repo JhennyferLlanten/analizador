@@ -1,4 +1,4 @@
-package co.edu.uniquindio;
+package co.edu.uniquindio.extraccion;
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;

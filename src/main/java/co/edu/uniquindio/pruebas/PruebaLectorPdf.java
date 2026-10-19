@@ -1,8 +1,11 @@
-package co.edu.uniquindio;
+package co.edu.uniquindio.pruebas;
+
+import co.edu.uniquindio.extraccion.ExtractorArticulos;
+import co.edu.uniquindio.extraccion.LectorPdf;
 
 import java.io.IOException;
 
-public class PruebaPdf {
+public class PruebaLectorPdf {
     public static void main(String[] args) throws IOException {
         String ruta = "articulosProyecto/7. Human-centred learning analytics and AI in education  A systematic review.pdf";
 

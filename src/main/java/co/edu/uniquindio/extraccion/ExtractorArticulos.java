@@ -1,4 +1,6 @@
-package co.edu.uniquindio;
+package co.edu.uniquindio.extraccion;
+
+import co.edu.uniquindio.procesamientoTexto.BuscadorTexto;
 
 public class ExtractorArticulos {
 

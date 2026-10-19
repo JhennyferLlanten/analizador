@@ -1,4 +1,7 @@
-package co.edu.uniquindio;
+package co.edu.uniquindio.pruebas;
+
+import co.edu.uniquindio.extraccion.ExtractorArticulos;
+import co.edu.uniquindio.procesamientoTexto.BuscadorTexto;
 
 public class Main {
     public static void main(String[] args) {
