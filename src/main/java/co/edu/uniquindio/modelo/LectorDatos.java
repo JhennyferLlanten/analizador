@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 public class LectorDatos {
 
     public static Articulo[] leerArticulos() throws IOException {
-        Articulo[] articulos = new Articulo[20];             //la posicion 0 guarda el articulo 1, y asi hasta la 19
+        Articulo[] articulos = new Articulo[20];             //lista de articulos
         BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/articulos.txt", StandardCharsets.UTF_8));   //abre el archivo para leerlo linea por linea
 
         int i = 0;
