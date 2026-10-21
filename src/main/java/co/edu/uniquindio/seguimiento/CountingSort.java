@@ -21,7 +21,7 @@ public class CountingSort {
 
         int[] inicio = new int[maximo + 1];                        //Para cada grupo de frecuencia, reserva la cant de espacios que tiene ese grupo
         int acumulado = 0;
-        for (int v = maximo; v >= 1; v--) {
+        for (int v = maximo; v >= 1; v--) {                        //recorre de mayor a menor
             inicio[v] = acumulado;                                 //en que posicion inicia el grupo de la frecuencia
             acumulado = acumulado + palabrasPorFrecuencia[v];      //reserva los espacios y se mueve al siguiente espacio disponible
         }

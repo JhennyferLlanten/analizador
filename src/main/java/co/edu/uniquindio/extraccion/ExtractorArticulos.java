@@ -91,10 +91,26 @@ public class ExtractorArticulos {
         int i = 0;
 
         while (i < nombreArchivo.length() && nombreArchivo.charAt(i) >= '0' && nombreArchivo.charAt(i) <= '9') {
-            numero = numero * 10 + (nombreArchivo.charAt(i) - '0');         //Convierte la letra del dígito en el número y lo grega a la derecha del numero
+            numero = numero * 10 + (nombreArchivo.charAt(i) - '0');         //Convierte la letra del dígito en el número y lo agrega a la derecha del numero
             i++;
         }
         return numero;
+    }
+
+    // Se corrigen manualmente ya que son casos especiales
+    public static String corregirPalabrasPartidas(String abstractLimpio) {
+        String[] partidas = {"practi tioners", "re lationships", "pro grams", "tech nological", "edu cation", "devel opment", "in clusion"};   //como salen del PDF
+        String[] correctas = {"practitioners", "relationships", "programs", "technological", "education", "development", "inclusion"};       //como deben quedar
+
+        String texto = abstractLimpio;
+        for (int i = 0; i < partidas.length; i++) {                             //una vez por cada palabra partida
+            int posicion = BuscadorTexto.buscarPatron(texto, partidas[i], 0);
+            while (posicion != -1) {                                            //mientras la encuentre
+                texto = texto.substring(0, posicion) + correctas[i] + texto.substring(posicion + partidas[i].length());         //antes + correcta + despues
+                posicion = BuscadorTexto.buscarPatron(texto, partidas[i], posicion + correctas[i].length());                   //sigue buscando despues de lo corregido
+            }
+        }
+        return texto;
     }
 
     public static String corregirTitulo(int numero, String tituloMetadatos) {

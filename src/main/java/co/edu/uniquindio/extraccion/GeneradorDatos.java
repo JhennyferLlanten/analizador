@@ -20,7 +20,7 @@ public class GeneradorDatos {
         for (int numero = 1; numero <= archivos.length; numero++) {
             String ruta = numeracion[numero].getPath();
             String titulo = ExtractorArticulos.corregirTitulo(numero, LectorPdf.leerTitulo(ruta));
-            String resumen = ExtractorArticulos.extraerAbstract(LectorPdf.leerPrimeraPagina(ruta));
+            String resumen = ExtractorArticulos.corregirPalabrasPartidas(ExtractorArticulos.extraerAbstract(LectorPdf.leerPrimeraPagina(ruta)));
 
             if (resumen.length() == 0) {
                 System.out.println("ATENCION: no se pudo extraer el abstract del articulo " + numero);

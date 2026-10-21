@@ -15,7 +15,7 @@ public class LectorDatos {
         BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/articulos.txt", StandardCharsets.UTF_8));   //abre el archivo para leerlo linea por linea
 
         int i = 0;
-        String linea = lector.readLine();                   //lee la primera linea
+        String linea = lector.readLine();                   //lee la primera linea (primer articulo)
         while (linea != null) {                             //cuando ya no hay mas lineas, readLine entrega null
             int posicionPrimerTab = BuscadorTexto.buscarPatron(linea, "\t", 0);
             int posicionSegundoTab = BuscadorTexto.buscarPatron(linea, "\t", posicionPrimerTab+ 1);
