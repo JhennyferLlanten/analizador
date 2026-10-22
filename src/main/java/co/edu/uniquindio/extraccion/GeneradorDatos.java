@@ -7,9 +7,9 @@ import java.io.PrintWriter;
 public class GeneradorDatos {
 
     public static void main(String[] args) throws IOException {
-        File[] archivos = new File("articulosProyecto").listFiles();   //lista de archivos
+        File[] archivos = new File("articulosProyecto").listFiles();                    //lista de archivos
 
-        File[] numeracion = new File[archivos.length + 1];  //crea lista la enumeración
+        File[] numeracion = new File[archivos.length + 1];                                       //crea lista de la enumeración
         for (int i = 0; i < archivos.length; i++) {
             int numero = ExtractorArticulos.obtenerNumero(archivos[i].getName());
             numeracion[numero] = archivos[i];
@@ -19,7 +19,7 @@ public class GeneradorDatos {
         int total = 0;
         for (int numero = 1; numero <= archivos.length; numero++) {
             String ruta = numeracion[numero].getPath();
-            String titulo = ExtractorArticulos.corregirTitulo(numero, LectorPdf.leerTitulo(ruta));
+            String titulo = ExtractorArticulos.obtenerTitulo(LectorPdf.leerTitulo(ruta), numeracion[numero].getName());
             String resumen = ExtractorArticulos.corregirPalabrasPartidas(ExtractorArticulos.extraerAbstract(LectorPdf.leerPrimeraPagina(ruta)));
 
             if (resumen.length() == 0) {

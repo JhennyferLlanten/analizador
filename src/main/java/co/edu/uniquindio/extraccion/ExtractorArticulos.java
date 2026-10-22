@@ -4,24 +4,24 @@ import co.edu.uniquindio.procesamientoTexto.BuscadorTexto;
 
 public class ExtractorArticulos {
 
-    public static int encontrarInicioAbstract(String texto) {
-        String[] marcas = {"\nEthical considerations", "Abstract", "A B S T R A C T"};      //La primera solo existe en el articulo 7 (antes del abstract)
+    public static <string> int encontrarInicioAbstract(String texto) {
+        String[] marcas = {"\nEthical considerations", "Abstract", "A B S T R A C T", };      //La primera solo existe en el articulo 7 (antes del texto del abstract)
         int posicionMarca = -1;
         int tamanoMarca = 0;
 
-        for (int i = 0; i < marcas.length && posicionMarca == -1; i++) {         //se detiene en cuanto encuentra una marca
+        for (int i = 0; i < marcas.length && posicionMarca == -1; i++) {                    //se detiene en cuanto encuentra una marca
             int posicion = BuscadorTexto.buscarPatron(texto, marcas[i], 0);
             if (posicion != -1) {
                 posicionMarca = posicion;
-                tamanoMarca = marcas[i].length();         //guarda el largo de la marca que se encontro
+                tamanoMarca = marcas[i].length();                                            //guarda el largo de la marca que se encontro
             }
         }
 
-        if (posicionMarca == -1) {          //ninguna marca esta
+        if (posicionMarca == -1) {                                                           //ninguna marca esta
             return -1;
         }
 
-        int inicio = posicionMarca + tamanoMarca;        //Se ubica al terminar la marca
+        int inicio = posicionMarca + tamanoMarca;                                            //Se ubica al terminar la marca
         while (inicio < texto.length() && esSeparador(texto.charAt(inicio))) {
             inicio++;
         }
@@ -35,7 +35,7 @@ public class ExtractorArticulos {
         for (int i = 0; i < marcasFin.length; i++) {
             int posicionMarca = BuscadorTexto.buscarPatron(texto, marcasFin[i], inicioAbstract);
             if (posicionMarca != -1 && (posicionFin == -1 || posicionMarca < posicionFin)) {    //marca existe y (no hay posicion guardada o la nueva marca esta primero)
-                posicionFin = posicionMarca;           //Guarda la posición donde termina el texto del abstract
+                posicionFin = posicionMarca;                                                    //Guarda la posición donde termina el texto del abstract
             }
         }
         return posicionFin;
@@ -67,15 +67,15 @@ public class ExtractorArticulos {
             char c = abstractCrudo.charAt(i);
 
             if (c == '-' && i + 1 < tamano && esSaltoDeLinea(abstractCrudo.charAt(i + 1))) {
-                i++;                                        //salta el guion
+                i++;                                                                                 //salta el guion
                 while (i < tamano && esSaltoDeLinea(abstractCrudo.charAt(i))) {
-                    i++;                                    //salta el salto de linea: la palabra queda unida
+                    i++;                                                                            //salta el salto de linea: la palabra queda unida
                 }
-            } else if (esInvisible(c)) {                    //letra que no se ve: se descarta
+            } else if (esInvisible(c)) {                                                            //letra que no se ve: se descarta
                 i++;
-            } else if (esEspacioBlanco(c)) {                // si la nueva letra es un espacio, tabulador o un salto de línea
-                if (limpio.length() > 0 && limpio.charAt(limpio.length() - 1) != ' ') {     //si hay texto y la ultima letra no es espacio
-                    limpio.append(' ');                     //un solo espacio, sin repetir
+            } else if (esEspacioBlanco(c)) {                                                         // si la nueva letra es un espacio, tabulador o un salto de línea
+                if (limpio.length() > 0 && limpio.charAt(limpio.length() - 1) != ' ') {             //si hay texto y la ultima letra no es espacio
+                    limpio.append(' ');                                                             //un solo espacio, sin repetir
                 }
                 i++;
             } else {
@@ -97,7 +97,7 @@ public class ExtractorArticulos {
         return numero;
     }
 
-    // Se corrigen manualmente ya que son casos especiales
+    // Se corrigen manualmente ya que son casos especiales que solo se ven despues de leer el pdf
     public static String corregirPalabrasPartidas(String abstractLimpio) {
         String[] partidas = {"practi tioners", "re lationships", "pro grams", "tech nological", "edu cation", "devel opment", "in clusion"};   //como salen del PDF
         String[] correctas = {"practitioners", "relationships", "programs", "technological", "education", "development", "inclusion"};       //como deben quedar
@@ -113,14 +113,35 @@ public class ExtractorArticulos {
         return texto;
     }
 
-    public static String corregirTitulo(int numero, String tituloMetadatos) {
-        if (numero == 11) {         //los metadatos dicen "transform" y el articulo dice "transforms"
-            return "A scoping review on how generative artificial intelligence transforms assessment in higher education";
-        }
-        if (numero == 13) {         //los metadatos traen un codigo de la revista en lugar del titulo
-            return "Artificial intelligence for education and its emphasis on assessment and adversity quotient: a review";
+    public static String obtenerTitulo(String tituloMetadatos, String nombreArchivo) {
+        if (contarPalabras(tituloMetadatos) < 4) {                                                                      //el metadato no es un titulo esta vacio o es un codigo
+            return tituloDelNombre(nombreArchivo);
         }
         return tituloMetadatos;
+    }
+
+    public static int contarPalabras(String texto) {
+        int palabras = 0;
+        boolean dentroDePalabra = false;
+        for (int i = 0; i < texto.length(); i++) {
+            if (esEspacioBlanco(texto.charAt(i))) {
+                dentroDePalabra = false;                    //un espacio termina la palabra
+            } else if (dentroDePalabra == false) {          //si es una letra y no esta dentro de la palabra
+                dentroDePalabra = true;                     //empieza una palabra nueva
+                palabras++;
+            }
+        }
+        return palabras;
+    }
+
+    public static String tituloDelNombre(String nombreArchivo) {
+        int inicio = 0;
+        while (inicio < nombreArchivo.length() && nombreArchivo.charAt(inicio) >= '0' && nombreArchivo.charAt(inicio) <= '9') {
+            inicio++;                                       //salta el numero
+        }
+        inicio = inicio + 2;                                //salta el punto y el espacio
+        int fin = nombreArchivo.length() - 4;               //quita ".pdf"
+        return nombreArchivo.substring(inicio, fin);
     }
 
     public static boolean esSaltoDeLinea(char c) {
@@ -133,7 +154,7 @@ public class ExtractorArticulos {
     }
 
     public static boolean esInvisible(char c) {
-        return c == '​' || c == '﻿';          //espacio de ancho cero y marca de inicio de archivo, \u200B, \uFEFF
+        return c == '​' || c == '﻿';                                       //espacio de ancho cero y marca de inicio de archivo, \u200B, \uFEFF
     }
 
     public static boolean esSeparador(char c) {
