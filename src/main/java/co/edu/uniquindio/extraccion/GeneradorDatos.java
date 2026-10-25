@@ -9,7 +9,7 @@ public class GeneradorDatos {
     public static void main(String[] args) throws IOException {
         File[] archivos = new File("articulosProyecto").listFiles();                    //lista de archivos
 
-        File[] numeracion = new File[archivos.length + 1];                                       //crea lista de la enumeración
+        File[] numeracion = new File[archivos.length + 1];                                       //crea lista de la enumeración para guardar archivos en orden
         for (int i = 0; i < archivos.length; i++) {
             int numero = ExtractorArticulos.obtenerNumero(archivos[i].getName());
             numeracion[numero] = archivos[i];

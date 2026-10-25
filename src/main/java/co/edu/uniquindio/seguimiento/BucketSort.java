@@ -17,7 +17,7 @@ public class BucketSort {
         int ancho = 10;                                                             // cuántas frecuencias cubre cada cubeta
         int numeroCubetas = (maximo - 1) / ancho + 1;                               // 9 cubetas
         int[][] cubetas = new int[numeroCubetas][total];                            // cada cubeta guarda posiciones de palabras
-        int[] tamanos = new int[numeroCubetas];                                     // cuántas posiciones tiene cada cubeta
+        int[] tamanos = new int[numeroCubetas];                                     // cuántas posiciones tiene guardada cada cubeta
 
         for (int i = 0; i < total; i++) {                                           // Cada palabra va a la cubeta de su rango
             int cubeta = (conteo.frecuencias[i] - 1) / ancho;
