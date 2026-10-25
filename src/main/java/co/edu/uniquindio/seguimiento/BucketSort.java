@@ -14,15 +14,24 @@ public class BucketSort {
             }
         }
 
-        int ancho = 10;                                                             // cuántas frecuencias cubre cada cubeta
-        int numeroCubetas = (maximo - 1) / ancho + 1;                               // 9 cubetas
-        int[][] cubetas = new int[numeroCubetas][total];                            // cada cubeta guarda posiciones de palabras
-        int[] tamanos = new int[numeroCubetas];                                     // cuántas posiciones tiene guardada cada cubeta
+        int numeroCubetas = total;                                                  // n cubetas: una por cada palabra
+        int[] cubetaDe = new int[total];                                            // a qué cubeta va cada palabra
+        int[] tamanos = new int[numeroCubetas];                                     // cuántas palabras va a tener cada cubeta
+        for (int i = 0; i < total; i++) {
+            cubetaDe[i] = (conteo.frecuencias[i] - 1) * numeroCubetas / maximo;     // reparte las frecuencias de 1 a maximo entre las n cubetas
+            tamanos[cubetaDe[i]]++;
+        }
 
-        for (int i = 0; i < total; i++) {                                           // Cada palabra va a la cubeta de su rango
-            int cubeta = (conteo.frecuencias[i] - 1) / ancho;
-            cubetas[cubeta][tamanos[cubeta]] = i;                                   //Guarda la posicion en la cubeta correspondiente
-            tamanos[cubeta]++;
+        int[][] cubetas = new int[numeroCubetas][];                                 // cada cubeta guarda posiciones de palabras
+        for (int c = 0; c < numeroCubetas; c++) {
+            cubetas[c] = new int[tamanos[c]];                                       // cada cubeta con el tamaño justo
+        }
+
+        int[] llenos = new int[numeroCubetas];                                      // cuántas posiciones lleva guardadas cada cubeta
+        for (int i = 0; i < total; i++) {                                           // reparte: cada palabra va a su cubeta
+            int c = cubetaDe[i];                                                    // que cubeta le corresponde
+            cubetas[c][llenos[c]] = i;                                              //la guarda en el primer lugar vacio de la cubeta
+            llenos[c]++;
         }
 
         for (int c = 0; c < numeroCubetas; c++) {                                   // ordena cada cubeta por dentro (inserción, de mayor a menor)
